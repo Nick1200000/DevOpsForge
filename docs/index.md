@@ -25,12 +25,13 @@ devopsforge suggest /path/to/repository
 
 ## 📚 Documentation Sections
 
-- [Installation Guide](installation.md)
-- [User Guide](user-guide.md)
-- [API Reference](api-reference.md)
-- [Examples](examples.md)
-- [Contributing](contributing.md)
-- [Troubleshooting](troubleshooting.md)
+- [Installation Guide](installation.md) - Setup instructions and troubleshooting
+- [User Guide](user-guide.md) - Detailed usage instructions
+- [Examples](examples.md) - Basic usage examples
+- [Enhanced Examples](examples-enhanced.md) - Step-by-step walkthroughs
+- [API Reference](api-reference.md) - Programmatic usage
+- [Contributing](contributing.md) - Developer guidelines
+- [Troubleshooting](troubleshooting.md) - Common issues and solutions
 
 ## 🔧 Features
 
@@ -56,6 +57,17 @@ Check out our [Installation Guide](installation.md) to get DevOpsForge up and ru
 
 We welcome contributions! See our [Contributing Guide](contributing.md) for details on how to get involved.
 
+## 🔗 Repository Links
+
+- **View Source**: [GitHub Repository](https://github.com/Nick1200000/DevOpsForge)
+- **Report Issues**: [GitHub Issues](https://github.com/Nick1200000/DevOpsForge/issues)
+- **Join Discussion**: [GitHub Discussions](https://github.com/Nick1200000/DevOpsForge/discussions)
+- **Edit This Page**: [Edit on GitHub](https://github.com/Nick1200000/DevOpsForge/edit/main/docs/index.md)
+
 ## 📄 License
 
 DevOpsForge is licensed under the MIT License. See [LICENSE](../LICENSE) for details.
+
+---
+
+**💡 Tip**: Check out our [Enhanced Examples](examples-enhanced.md) for step-by-step walkthroughs with real project setups!

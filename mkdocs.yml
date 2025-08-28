@@ -53,6 +53,7 @@ nav:
   - Installation: installation.md
   - User Guide: user-guide.md
   - Examples: examples.md
+  - Enhanced Examples: examples-enhanced.md
   - API Reference: api-reference.md
   - Contributing: contributing.md
   - Troubleshooting: troubleshooting.md
