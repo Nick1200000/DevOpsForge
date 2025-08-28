@@ -62,35 +62,19 @@ markdown_extensions:
   - codehilite
   - footnotes
   - meta
-  - pymdownx.betterem:
-      smart_enable: all
+  - pymdownx.betterem
   - pymdownx.caret
   - pymdownx.details
-  - pymdownx.emoji:
-      emoji_generator: !!python/name:materialx.emoji.twemoji
-  - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
+  - pymdownx.emoji
+  - pymdownx.highlight
   - pymdownx.inlinehilite
   - pymdownx.keys
   - pymdownx.magiclink
   - pymdownx.mark
   - pymdownx.smartsymbols
-  - pymdownx.snippets:
-      check_builtins: true
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.tabbed:
-      alternate_style: true
-      combine_header_slug: true
-      slug_separator: '-'
-      tabs_style: is-boxed
-  - pymdownx.tasklist:
-      custom_checkbox: true
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.tasklist
   - pymdownx.tilde
   - toc:
       anchorlink: true
