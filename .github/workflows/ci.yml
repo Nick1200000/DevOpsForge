@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ main ]
 
+# Force workflow refresh
+env:
+  WORKFLOW_VERSION: "2.0.0"
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -20,6 +24,12 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
+    
+    - name: Verify Python version
+      run: |
+        echo "Python version: $(python --version)"
+        echo "Python location: $(which python)"
+        echo "Python executable: $(python -c 'import sys; print(sys.executable)')"
     
     - name: Cache pip dependencies
       uses: actions/cache@v3
