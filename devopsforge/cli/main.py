@@ -19,9 +19,9 @@ console = Console()
 
 
 @click.group()
-@click.version_option(version="0.1.0", prog_name="DevOpsGenie")
+@click.version_option(version="0.1.0", prog_name="DevOpsForge")
 def cli():
-    """🧞‍♂️ DevOpsGenie - AI-powered DevOps companion"""
+    """🧞‍♂️ DevOpsForge - AI-powered DevOps companion"""
     pass
 
 

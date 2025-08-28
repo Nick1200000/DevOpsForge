@@ -57,7 +57,7 @@ class TestRepositoryAnalyzer:
         """Test file existence checking"""
         analyzer = RepositoryAnalyzer(str(sample_python_project))
         assert analyzer._has_file("requirements.txt")
-        assert analyzer._has_file("app.py")
+        assert analyzer._has_file("main.py")
         assert not analyzer._has_file("nonexistent.py")
 
     def test_analyze_complete(self, sample_python_project):
@@ -98,6 +98,7 @@ class TestProjectInfo:
             build_tools=["pip"],
             test_frameworks=["pytest"],
             framework="flask",
+            web_framework="flask",
             database=None,
             has_docker=False,
             has_kubernetes=False,

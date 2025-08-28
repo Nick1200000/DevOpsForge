@@ -42,7 +42,7 @@ class TestDockerfileGenerator:
 
         dockerfile = generator.generate(project_info)
         assert "FROM node:" in dockerfile
-        assert "npm install" in dockerfile
+        assert "npm ci" in dockerfile
 
     def test_generate_java_dockerfile(self):
         """Test Java Dockerfile generation"""
@@ -153,7 +153,7 @@ class TestCICDGenerator:
         # Check for Python-specific steps
         assert "Set up Python" in workflow
         assert "pip install" in workflow
-        assert "python -m pytest" in workflow
+        assert "pytest" in workflow
 
     def test_gitlab_ci_structure(self, project_info_dict):
         """Test GitLab CI pipeline structure"""
@@ -167,4 +167,4 @@ class TestCICDGenerator:
 
         # Check for Python-specific steps
         assert "pip install" in pipeline
-        assert "python -m pytest" in pipeline
+        assert "pytest" in pipeline

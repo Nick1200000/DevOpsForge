@@ -26,7 +26,7 @@ class TestCLI:
         result = runner.invoke(cli, ["analyze", "--help"])
         assert result.exit_code == 0
         assert "analyze" in result.output
-        assert "repo_path" in result.output
+        assert "REPO_PATH" in result.output
 
     def test_generate_command_help(self):
         """Test generate command help"""
@@ -42,7 +42,7 @@ class TestCLI:
         result = runner.invoke(cli, ["suggest", "--help"])
         assert result.exit_code == 0
         assert "suggest" in result.output
-        assert "repo_path" in result.output
+        assert "REPO_PATH" in result.output
 
     def test_analyze_command_missing_path(self):
         """Test analyze command with missing path"""
@@ -96,7 +96,7 @@ class TestCLIWithMockProject:
 
         # Should succeed
         assert result.exit_code == 0
-        assert "Generated" in result.output
+        assert "Successfully generated" in result.output
 
         # Check if files were created
         assert (output_dir / "Dockerfile").exists()
