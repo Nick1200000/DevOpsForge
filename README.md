@@ -1,195 +1,157 @@
-# DevOpsForge 🔨
+# DevOpsForge
+
+```
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                        🔧 DevOpsForge 🔧                     ║
+║                                                              ║
+║                    Professional DevOps Automation             ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+```
 
 [![PyPI version](https://badge.fury.io/py/devopsforge.svg)](https://badge.fury.io/py/devopsforge)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](CONTRIBUTING.md)
+[![CI/CD](https://github.com/Nick1200000/DevOpsForge/workflows/CI%2FCD/badge.svg)](https://github.com/Nick1200000/DevOpsForge/actions)
+[![Documentation](https://github.com/Nick1200000/DevOpsForge/workflows/Deploy%20Documentation/badge.svg)](https://nick1200000.github.io/DevOpsForge/)
 
-> Professional DevOps automation tool that automatically generates production-ready CI/CD pipelines, Dockerfiles, and Kubernetes configurations.
+Professional DevOps automation tool that automatically generates CI/CD pipelines, Dockerfiles, and Kubernetes configurations for your projects.
 
-## ✨ Features
+## 🚀 Features
 
-- 🔍 **Smart Repository Analysis** - Automatically detects project type, language, framework, and dependencies
-- 🐳 **Intelligent Dockerfile Generation** - Creates optimized, multi-stage Dockerfiles with security best practices
-- 🔄 **Automated CI/CD Creation** - Generates GitHub Actions and GitLab CI pipelines with security scanning
-- 🛡️ **DevSecOps Integration** - Built-in Trivy vulnerability scanning and security best practices
-- 💡 **Optimization Engine** - Provides tailored recommendations for performance and security improvements
-- 🌍 **Multi-Language Support** - Python, Node.js, Java, Go, Rust, and more
-
-## 🚀 Quick Start
-
-### Installation
-
-```bash
-pip install devopsforge
-```
-
-### Basic Usage
-
-```bash
-# Analyze a repository
-devopsforge analyze /path/to/project
-
-# Generate DevOps configurations
-devopsforge generate /path/to/project -o ./devops
-
-# Get optimization suggestions
-devopsforge suggest /path/to/project
-```
-
-## 📋 Commands
-
-### `analyze` Command
-
-Analyzes a repository and detects project characteristics.
-
-```bash
-devopsforge analyze <repo_path> [options]
-```
-
-**Options:**
-- `--output, -o`: Output directory for analysis results
-- `--format, -f`: Output format (json, table, summary)
-
-**Examples:**
-```bash
-# Basic analysis
-devopsforge analyze my-project
-
-# Save analysis to file
-devopsforge analyze my-project -o ./results -f json
-
-# Get summary format
-devopsforge analyze my-project -f summary
-```
-
-### `generate` Command
-
-Generates DevOps configurations based on repository analysis.
-
-```bash
-devopsforge generate <repo_path> -o <output_dir> [options]
-```
-
-**Options:**
-- `--output, -o`: Output directory (required)
-- `--ci-type`: CI/CD type (github_actions, gitlab_ci)
-- `--dockerfile/--no-dockerfile`: Generate Dockerfile
-- `--cicd/--no-cicd`: Generate CI/CD pipeline
-
-**Examples:**
-```bash
-# Generate everything
-devopsforge generate my-project -o ./devops
-
-# Generate only Dockerfile
-devopsforge generate my-project -o ./devops --no-cicd
-
-# Generate GitLab CI instead of GitHub Actions
-devopsforge generate my-project -o ./devops --ci-type gitlab_ci
-```
-
-### `suggest` Command
-
-Provides optimization suggestions for a repository.
-
-```bash
-devopsforge suggest <repo_path>
-```
-
-## 🔧 Supported Technologies
-
-### Programming Languages
-- **Python**: Django, Flask, FastAPI, pip, poetry, pytest
-- **Node.js**: Express, Next.js, React, Vue.js, npm, yarn, pnpm, Jest
-- **Java**: Maven, Gradle, JUnit
-- **Go**: Go modules
-- **Rust**: Cargo
-
-### DevOps Tools
-- **Containers**: Docker, multi-stage builds
-- **CI/CD**: GitHub Actions, GitLab CI
-- **Security**: Trivy vulnerability scanner
-- **Orchestration**: Kubernetes-ready configurations
-
-## 🏗️ Architecture
-
-```
-devopsforge/
-├── core/                    # Core analysis engine
-│   └── analyzer.py         # Repository analyzer
-├── templates/               # Jinja2 template system
-│   ├── dockerfile_generator.py    # Dockerfile templates
-│   └── cicd_generator.py          # CI/CD templates
-├── cli/                     # Command-line interface
-│   └── main.py             # CLI commands
-└── __main__.py             # Package entry point
-```
-
-## 🛠️ Technology Stack
-
-- **Language**: Python 3.8+
-- **Template Engine**: Jinja2
-- **CLI Framework**: Click
-- **UI Enhancement**: Rich (for beautiful terminal output)
-- **Security**: Trivy integration
-- **Testing**: pytest, unittest support
+- **🔍 Automatic Project Analysis**: Detects project type, language, dependencies, and frameworks
+- **🐳 Dockerfile Generation**: Creates optimized, multi-stage Dockerfiles for various languages
+- **🔄 CI/CD Pipeline Generation**: Generates GitHub Actions and GitLab CI configurations
+- **🔒 DevSecOps Integration**: Includes security scanning and best practices
+- **💡 Optimization Suggestions**: Provides tailored recommendations for your project
+- **🌐 Multi-Language Support**: Works with Python, Node.js, Java, Go, and Rust projects
 
 ## 📦 Installation
 
-### From PyPI (Recommended)
-
 ```bash
 pip install devopsforge
 ```
 
-### From Source
+## 🚀 Quick Start
 
+### Analyze Your Project
 ```bash
-git clone https://github.com/devopsforge/devopsforge.git
-cd devopsforge
-pip install -e .
+# Analyze current directory
+devopsforge analyze .
+
+# Analyze specific repository
+devopsforge analyze /path/to/repository
 ```
 
-## 🧪 Testing
-
+### Generate DevOps Configurations
 ```bash
-# Install development dependencies
-pip install -r requirements.txt
+# Generate all configurations
+devopsforge generate . -o ./devops-config
 
-# Run tests
-python -m pytest
+# Generate only Dockerfile
+devopsforge generate . -o ./output --dockerfile
 
-# Run the test script
-python test_devopsforge.py
+# Generate only CI/CD pipeline
+devopsforge generate . -o ./output --ci-cd
 ```
+
+### Get Optimization Suggestions
+```bash
+devopsforge suggest .
+```
+
+## 🌟 Supported Technologies
+
+### Languages & Frameworks
+- **Python**: Django, Flask, FastAPI, pytest
+- **Node.js**: Express, React, Jest, npm/yarn
+- **Java**: Spring Boot, Maven, Gradle, JUnit
+- **Go**: Go modules, testing
+- **Rust**: Cargo, testing
+
+### DevOps Tools
+- **CI/CD**: GitHub Actions, GitLab CI
+- **Containers**: Docker, Kubernetes
+- **Security**: Trivy, Safety, Bandit
+- **Testing**: pytest, Jest, JUnit, Go testing
 
 ## 📚 Documentation
 
-- **[Usage Guide](USAGE.md)** - Comprehensive usage examples and configuration options
-- **[Contributing Guidelines](CONTRIBUTING.md)** - How to contribute to the project
-- **[Code of Conduct](CODE_OF_CONDUCT.md)** - Community guidelines
-- **[Changelog](CHANGELOG.md)** - Version history and changes
+📖 **Complete documentation available at**: [https://nick1200000.github.io/DevOpsForge/](https://nick1200000.github.io/DevOpsForge/)
 
-## 🤝 Contributing
+- [Installation Guide](https://nick1200000.github.io/DevOpsForge/installation/)
+- [User Guide](https://nick1200000.github.io/DevOpsForge/user-guide/)
+- [Examples](https://nick1200000.github.io/DevOpsForge/examples/)
+- [Enhanced Examples](https://nick1200000.github.io/DevOpsForge/examples-enhanced/)
+- [API Reference](https://nick1200000.github.io/DevOpsForge/api-reference/)
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+## 🔧 Example Output
 
-### Development Setup
+### Project Analysis
+```
+┌─────────────────────────────────────┐
+│ 🔍 Repository Analysis Results      │
+└─────────────────────────────────────┘
 
+┌─────────────┬─────────────────────┐
+│ Property    │ Value               │
+├─────────────┼─────────────────────┤
+│ Project Type│ python              │
+│ Language    │ python              │
+│ Dependencies│ flask, pytest       │
+│ Build Tools │ pip                 │
+│ Test Framew.│ pytest             │
+│ Framework   │ flask               │
+└─────────────┴─────────────────────┘
+```
+
+### Generated Files
+```
+devops-config/
+├── Dockerfile                    # ← Generated
+├── .github/workflows/ci.yml      # ← Generated
+└── README-DEVOPS.md             # ← Generated
+```
+
+## 🛠️ Development
+
+### Setup Development Environment
 ```bash
-git clone https://github.com/devopsforge/devopsforge.git
-cd devopsforge
+# Clone repository
+git clone https://github.com/Nick1200000/DevOpsForge.git
+cd DevOpsForge
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Linux/macOS
+# or
+venv\Scripts\activate     # Windows
+
+# Install dependencies
 pip install -r requirements.txt
 pip install -e .
 ```
 
-### Adding New Project Types
+### Run Tests
+```bash
+# Run all tests
+python -m pytest tests/ -v
 
-1. Update `RepositoryAnalyzer` in `core/analyzer.py`
-2. Create Jinja2 templates in `templates/` directory
-3. Add CLI support and tests
-4. Update documentation
+# Run with coverage
+python -m pytest tests/ --cov=devopsforge --cov-report=html
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](https://nick1200000.github.io/DevOpsForge/contributing/) for details.
+
+### How to Contribute
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📄 License
 
@@ -197,21 +159,22 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- [Jinja2](https://jinja.palletsprojects.com/) - Template engine
-- [Click](https://click.palletsprojects.com/) - CLI framework
-- [Rich](https://rich.readthedocs.io/) - Terminal formatting
-- [Trivy](https://trivy.dev/) - Security scanning
+- Built with [Click](https://click.palletsprojects.com/) for CLI
+- Styled with [Rich](https://rich.readthedocs.io/) for beautiful terminal output
+- Templates powered by [Jinja2](https://jinja.palletsprojects.com/)
+- Documentation built with [MkDocs](https://www.mkdocs.org/)
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/devopsforge/devopsforge/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/devopsforge/devopsforge/discussions)
-- **Documentation**: [USAGE.md](USAGE.md)
-
-## 🌟 Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=devopsforge/devopsforge&type=Date)](https://star-history.com/#devopsforge/devopsforge&Date)
+- **Documentation**: [https://nick1200000.github.io/DevOpsForge/](https://nick1200000.github.io/DevOpsForge/)
+- **Issues**: [GitHub Issues](https://github.com/Nick1200000/DevOpsForge/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Nick1200000/DevOpsForge/discussions)
+- **Email**: kumarn7570@gmail.com
 
 ---
 
-**Made with ❤️ by the DevOpsForge community**
+**Made with ❤️ by the DevOpsForge Team**
+
+[![GitHub stars](https://img.shields.io/github/stars/Nick1200000/DevOpsForge?style=social)](https://github.com/Nick1200000/DevOpsForge)
+[![GitHub forks](https://img.shields.io/github/forks/Nick1200000/DevOpsForge?style=social)](https://github.com/Nick1200000/DevOpsForge)
+[![GitHub watchers](https://img.shields.io/github/watchers/Nick1200000/DevOpsForge?style=social)](https://github.com/Nick1200000/DevOpsForge)

@@ -1,5 +1,15 @@
 # DevOpsForge Documentation
 
+```
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                        🔧 DevOpsForge 🔧                     ║
+║                                                              ║
+║                    Professional DevOps Automation             ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+```
+
 Welcome to DevOpsForge - the professional DevOps automation tool that automatically generates CI/CD pipelines, Dockerfiles, and Kubernetes configurations.
 
 ## 🚀 Quick Start
