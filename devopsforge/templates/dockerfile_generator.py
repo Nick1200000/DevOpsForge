@@ -9,10 +9,10 @@ from pathlib import Path
 
 class DockerfileGenerator:
     """Generates Dockerfiles based on project analysis"""
-    
+
     def __init__(self):
         self.templates = self._load_templates()
-    
+
     def _load_templates(self) -> Dict[str, Template]:
         """Load Jinja2 templates for different project types"""
         return {
@@ -20,27 +20,29 @@ class DockerfileGenerator:
             "nodejs": Template(self._get_nodejs_template()),
             "java": Template(self._get_java_template()),
             "go": Template(self._get_go_template()),
-            "rust": Template(self._get_rust_template())
+            "rust": Template(self._get_rust_template()),
         }
-    
-    def generate(self, project_info: Dict[str, Any], output_path: str = None) -> str:
+
+    def generate(
+        self, project_info: Dict[str, Any], output_path: str = None
+    ) -> str:
         """Generate a Dockerfile based on project information"""
         project_type = project_info.get("project_type", "unknown")
-        
+
         if project_type not in self.templates:
             raise ValueError(f"Unsupported project type: {project_type}")
-        
+
         template = self.templates[project_type]
         dockerfile_content = template.render(**project_info)
-        
+
         if output_path:
             output_file = Path(output_path) / "Dockerfile"
             output_file.parent.mkdir(parents=True, exist_ok=True)
             with open(output_file, "w") as f:
                 f.write(dockerfile_content)
-        
+
         return dockerfile_content
-    
+
     def _get_python_template(self) -> str:
         return (
             "# Multi-stage Python Dockerfile\n"
@@ -89,16 +91,16 @@ class DockerfileGenerator:
             "    CMD python -c \"import requests; requests.get('http://localhost:8000/health')\" || exit 1\n\n"
             "# Run the application\n"
             "{% if framework == 'django' %}\n"
-            "CMD [\"python\", \"manage.py\", \"runserver\", \"0.0.0.0:8000\"]\n"
+            'CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]\n'
             "{% elif framework == 'flask' %}\n"
-            "CMD [\"python\", \"app.py\"]\n"
+            'CMD ["python", "app.py"]\n'
             "{% elif framework == 'fastapi' %}\n"
-            "CMD [\"uvicorn\", \"main:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\"]\n"
+            'CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]\n'
             "{% else %}\n"
-            "CMD [\"python\", \"main.py\"]\n"
+            'CMD ["python", "main.py"]\n'
             "{% endif %}\n"
         )
-    
+
     def _get_nodejs_template(self) -> str:
         return (
             "# Multi-stage Node.js Dockerfile\n"
@@ -147,12 +149,12 @@ class DockerfileGenerator:
             "    CMD node -e \"require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })\" || exit 1\n\n"
             "# Run the application\n"
             "{% if framework == 'next.js' %}\n"
-            "CMD [\"dumb-init\", \"npm\", \"start\"]\n"
+            'CMD ["dumb-init", "npm", "start"]\n'
             "{% else %}\n"
-            "CMD [\"dumb-init\", \"node\", \"index.js\"]\n"
+            'CMD ["dumb-init", "node", "index.js"]\n'
             "{% endif %}\n"
         )
-    
+
     def _get_java_template(self) -> str:
         return (
             "# Multi-stage Java Dockerfile\n"
@@ -186,9 +188,9 @@ class DockerfileGenerator:
             "HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \\\n"
             "    CMD java -cp app.jar org.springframework.boot.loader.JarLauncher --spring.profiles.active=docker || exit 1\n\n"
             "# Run the application\n"
-            "ENTRYPOINT [\"dumb-init\", \"java\", \"-jar\", \"app.jar\"]\n"
+            'ENTRYPOINT ["dumb-init", "java", "-jar", "app.jar"]\n'
         )
-    
+
     def _get_go_template(self) -> str:
         return (
             "# Multi-stage Go Dockerfile\n"
@@ -225,9 +227,9 @@ class DockerfileGenerator:
             "HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \\\n"
             "    CMD wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1\n\n"
             "# Run the application\n"
-            "ENTRYPOINT [\"dumb-init\", \"./main\"]\n"
+            'ENTRYPOINT ["dumb-init", "./main"]\n'
         )
-    
+
     def _get_rust_template(self) -> str:
         return (
             "# Multi-stage Rust Dockerfile\n"
@@ -237,7 +239,7 @@ class DockerfileGenerator:
             "# Copy Cargo files\n"
             "COPY Cargo.toml Cargo.lock ./\n\n"
             "# Create dummy main.rs to build dependencies\n"
-            "RUN mkdir src && echo \"fn main() {}\" > src/main.rs\n"
+            'RUN mkdir src && echo "fn main() {}" > src/main.rs\n'
             "RUN cargo build --release\n"
             "RUN rm -rf src\n\n"
             "# Copy source code\n"
@@ -263,5 +265,5 @@ class DockerfileGenerator:
             "HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \\\n"
             "    CMD wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1\n\n"
             "# Run the application\n"
-            "ENTRYPOINT [\"dumb-init\", \"./{{ project_name|default('app') }}\"]\n"
+            'ENTRYPOINT ["dumb-init", "./{{ project_name|default(\'app\') }}"]\n'
         )

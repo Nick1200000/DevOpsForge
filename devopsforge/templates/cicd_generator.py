@@ -9,37 +9,44 @@ from pathlib import Path
 
 class CICDGenerator:
     """Generates CI/CD pipeline configurations"""
-    
+
     def __init__(self):
         self.templates = self._load_templates()
-    
+
     def _load_templates(self) -> Dict[str, Template]:
         """Load CI/CD templates"""
         return {
             "github_actions": Template(self._get_github_actions_template()),
-            "gitlab_ci": Template(self._get_gitlab_ci_template())
+            "gitlab_ci": Template(self._get_gitlab_ci_template()),
         }
-    
-    def generate(self, project_info: Dict[str, Any], output_path: str = None, ci_type: str = "github_actions") -> str:
+
+    def generate(
+        self,
+        project_info: Dict[str, Any],
+        output_path: str = None,
+        ci_type: str = "github_actions",
+    ) -> str:
         """Generate CI/CD configuration"""
         if ci_type not in self.templates:
             raise ValueError(f"Unsupported CI/CD type: {ci_type}")
-        
+
         template = self.templates[ci_type]
         cicd_content = template.render(**project_info)
-        
+
         if output_path:
             if ci_type == "github_actions":
-                output_file = Path(output_path) / ".github" / "workflows" / "ci.yml"
+                output_file = (
+                    Path(output_path) / ".github" / "workflows" / "ci.yml"
+                )
             else:
                 output_file = Path(output_path) / ".gitlab-ci.yml"
-            
+
             output_file.parent.mkdir(parents=True, exist_ok=True)
             with open(output_file, "w") as f:
                 f.write(cicd_content)
-        
+
         return cicd_content
-    
+
     def _get_github_actions_template(self) -> str:
         return (
             "name: CI/CD Pipeline\n\n"
@@ -84,22 +91,22 @@ class CICDGenerator:
             "    steps:\n"
             "    - uses: actions/checkout@v4\n"
             "    - name: Run Trivy vulnerability scanner\n"
-      "      uses: aquasecurity/trivy-action@master\n"
-      "      with:\n"
-      "        scan-type: 'fs'\n"
-      "        scan-ref: '.'\n"
-      "        format: 'sarif'\n"
-      "        output: 'trivy-results.sarif'\n\n"
-      "  build:\n"
-      "    runs-on: ubuntu-latest\n"
-      "    needs: [test, security]\n"
-      "    if: github.ref == 'refs/heads/main'\n"
-      "    steps:\n"
-      "    - uses: actions/checkout@v4\n"
-      "    - name: Build Docker image\n"
-      "      run: docker build -t {{ project_name|default('app') }} .\n"
+            "      uses: aquasecurity/trivy-action@master\n"
+            "      with:\n"
+            "        scan-type: 'fs'\n"
+            "        scan-ref: '.'\n"
+            "        format: 'sarif'\n"
+            "        output: 'trivy-results.sarif'\n\n"
+            "  build:\n"
+            "    runs-on: ubuntu-latest\n"
+            "    needs: [test, security]\n"
+            "    if: github.ref == 'refs/heads/main'\n"
+            "    steps:\n"
+            "    - uses: actions/checkout@v4\n"
+            "    - name: Build Docker image\n"
+            "      run: docker build -t {{ project_name|default('app') }} .\n"
         )
-    
+
     def _get_gitlab_ci_template(self) -> str:
         return (
             "stages:\n"
@@ -123,16 +130,16 @@ class CICDGenerator:
             "security:\n"
             "  stage: security\n"
             "  image: aquasec/trivy:latest\n"
-      "  script:\n"
-      "    - trivy fs --format sarif --output trivy-results.sarif .\n"
-      "  artifacts:\n"
-      "    reports:\n"
-      "      sarif: trivy-results.sarif\n\n"
-      "build:\n"
-      "  stage: build\n"
-      "  image: docker:latest\n"
-      "  services:\n"
-      "    - docker:dind\n"
-      "  script:\n"
-      "    - docker build -t {{ project_name|default('app') }} .\n"
+            "  script:\n"
+            "    - trivy fs --format sarif --output trivy-results.sarif .\n"
+            "  artifacts:\n"
+            "    reports:\n"
+            "      sarif: trivy-results.sarif\n\n"
+            "build:\n"
+            "  stage: build\n"
+            "  image: docker:latest\n"
+            "  services:\n"
+            "    - docker:dind\n"
+            "  script:\n"
+            "    - docker build -t {{ project_name|default('app') }} .\n"
         )

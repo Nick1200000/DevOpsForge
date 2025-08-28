@@ -2,8 +2,6 @@
 Core repository analyzer for DevOpsGenie
 """
 
-import os
-import ast
 import json
 from pathlib import Path
 from typing import Dict, List, Optional, Any
@@ -13,6 +11,7 @@ from dataclasses import dataclass
 @dataclass
 class ProjectInfo:
     """Information about a detected project"""
+
     project_type: str
     language: str
     version: Optional[str]
@@ -29,16 +28,18 @@ class ProjectInfo:
 
 class RepositoryAnalyzer:
     """Analyzes repository structure and detects project characteristics"""
-    
+
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
         self.project_info = None
-    
+
     def analyze(self) -> ProjectInfo:
         """Analyze the repository and return project information"""
         if not self.repo_path.exists():
-            raise ValueError(f"Repository path does not exist: {self.repo_path}")
-        
+            raise ValueError(
+                f"Repository path does not exist: {self.repo_path}"
+            )
+
         # Detect project type
         project_type = self._detect_project_type()
         language = self._detect_language()
@@ -52,7 +53,7 @@ class RepositoryAnalyzer:
         framework = self._detect_framework()
         database = self._detect_database()
         web_framework = self._detect_web_framework()
-        
+
         self.project_info = ProjectInfo(
             project_type=project_type,
             language=language,
@@ -65,16 +66,18 @@ class RepositoryAnalyzer:
             has_ci_cd=has_ci_cd,
             framework=framework,
             database=database,
-            web_framework=web_framework
+            web_framework=web_framework,
         )
-        
+
         return self.project_info
-    
+
     def _detect_project_type(self) -> str:
         """Detect the main project type"""
         if self._has_file("package.json"):
             return "nodejs"
-        elif self._has_file("requirements.txt") or self._has_file("pyproject.toml"):
+        elif self._has_file("requirements.txt") or self._has_file(
+            "pyproject.toml"
+        ):
             return "python"
         elif self._has_file("pom.xml"):
             return "java"
@@ -86,7 +89,7 @@ class RepositoryAnalyzer:
             return "make"
         else:
             return "unknown"
-    
+
     def _detect_language(self) -> str:
         """Detect the primary programming language"""
         type_mapping = {
@@ -94,10 +97,10 @@ class RepositoryAnalyzer:
             "python": "python",
             "java": "java",
             "go": "go",
-            "rust": "rust"
+            "rust": "rust",
         }
         return type_mapping.get(self._detect_project_type(), "unknown")
-    
+
     def _detect_version(self) -> Optional[str]:
         """Detect project version from various sources"""
         # Check package.json
@@ -108,7 +111,7 @@ class RepositoryAnalyzer:
                     return data.get("version")
             except:
                 pass
-        
+
         # Check pyproject.toml
         if self._has_file("pyproject.toml"):
             try:
@@ -116,40 +119,48 @@ class RepositoryAnalyzer:
                     content = f.read()
                     # Simple regex-like search for version
                     import re
-                    match = re.search(r'version\s*=\s*["\']([^"\']+)["\']', content)
+
+                    match = re.search(
+                        r'version\s*=\s*["\']([^"\']+)["\']', content
+                    )
                     if match:
                         return match.group(1)
             except:
                 pass
-        
+
         # Check pom.xml
         if self._has_file("pom.xml"):
             try:
                 with open(self.repo_path / "pom.xml") as f:
                     content = f.read()
                     import re
-                    match = re.search(r'<version>([^<]+)</version>', content)
+
+                    match = re.search(r"<version>([^<]+)</version>", content)
                     if match:
                         return match.group(1)
             except:
                 pass
-        
+
         return None
-    
+
     def _detect_dependencies(self) -> List[str]:
         """Detect project dependencies"""
         deps = []
-        
+
         if self._has_file("requirements.txt"):
             try:
                 with open(self.repo_path / "requirements.txt") as f:
                     for line in f:
                         line = line.strip()
                         if line and not line.startswith("#"):
-                            deps.append(line.split("==")[0].split(">=")[0].split("<=")[0])
+                            deps.append(
+                                line.split("==")[0]
+                                .split(">=")[0]
+                                .split("<=")[0]
+                            )
             except:
                 pass
-        
+
         if self._has_file("package.json"):
             try:
                 with open(self.repo_path / "package.json") as f:
@@ -158,13 +169,13 @@ class RepositoryAnalyzer:
                     deps.extend(data.get("devDependencies", {}).keys())
             except:
                 pass
-        
+
         return list(set(deps))
-    
+
     def _detect_build_tools(self) -> List[str]:
         """Detect build tools and package managers"""
         tools = []
-        
+
         if self._has_file("package.json"):
             tools.append("npm")
         if self._has_file("yarn.lock"):
@@ -183,35 +194,37 @@ class RepositoryAnalyzer:
             tools.append("go modules")
         if self._has_file("Cargo.toml"):
             tools.append("cargo")
-        
+
         return tools
-    
+
     def _detect_test_frameworks(self) -> List[str]:
         """Detect testing frameworks"""
         frameworks = []
-        
+
         # Python
         if self._has_file("pytest.ini") or self._has_file("pyproject.toml"):
             frameworks.append("pytest")
         if self._has_file("tox.ini"):
             frameworks.append("tox")
-        
+
         # Node.js
-        if self._has_file("jest.config.js") or self._has_file("jest.config.json"):
+        if self._has_file("jest.config.js") or self._has_file(
+            "jest.config.json"
+        ):
             frameworks.append("jest")
         if self._has_file("mocha.opts") or self._has_file(".mocharc.json"):
             frameworks.append("mocha")
-        
+
         # Java
         if self._has_file("pom.xml"):
             frameworks.append("junit")
-        
+
         return frameworks
-    
+
     def _detect_framework(self) -> Optional[str]:
         """Detect the main framework being used"""
         deps = self._detect_dependencies()
-        
+
         # Python frameworks
         if "django" in deps:
             return "django"
@@ -219,7 +232,7 @@ class RepositoryAnalyzer:
             return "flask"
         elif "fastapi" in deps:
             return "fastapi"
-        
+
         # Node.js frameworks
         if "express" in deps:
             return "express"
@@ -229,13 +242,13 @@ class RepositoryAnalyzer:
             return "react"
         elif "vue" in deps:
             return "vue.js"
-        
+
         return None
-    
+
     def _detect_database(self) -> Optional[str]:
         """Detect database dependencies"""
         deps = self._detect_dependencies()
-        
+
         if "psycopg2" in deps or "postgresql" in deps:
             return "postgresql"
         elif "mysql-connector" in deps or "mysql" in deps:
@@ -246,51 +259,57 @@ class RepositoryAnalyzer:
             return "redis"
         elif "mongodb" in deps or "pymongo" in deps:
             return "mongodb"
-        
+
         return None
-    
+
     def _detect_web_framework(self) -> Optional[str]:
         """Detect web framework (alias for framework)"""
         return self._detect_framework()
-    
+
     def _has_docker_files(self) -> bool:
         """Check if repository has Docker-related files"""
-        return any([
-            self._has_file("Dockerfile"),
-            self._has_file("docker-compose.yml"),
-            self._has_file("docker-compose.yaml"),
-            self._has_file(".dockerignore")
-        ])
-    
+        return any(
+            [
+                self._has_file("Dockerfile"),
+                self._has_file("docker-compose.yml"),
+                self._has_file("docker-compose.yaml"),
+                self._has_file(".dockerignore"),
+            ]
+        )
+
     def _has_kubernetes_files(self) -> bool:
         """Check if repository has Kubernetes-related files"""
-        return any([
-            self._has_file("k8s"),
-            self._has_file("kubernetes"),
-            self._has_file("helm"),
-            self._has_file("deployment.yaml"),
-            self._has_file("service.yaml")
-        ])
-    
+        return any(
+            [
+                self._has_file("k8s"),
+                self._has_file("kubernetes"),
+                self._has_file("helm"),
+                self._has_file("deployment.yaml"),
+                self._has_file("service.yaml"),
+            ]
+        )
+
     def _has_ci_cd_files(self) -> bool:
         """Check if repository has CI/CD configuration files"""
-        return any([
-            self._has_file(".github/workflows"),
-            self._has_file(".gitlab-ci.yml"),
-            self._has_file("Jenkinsfile"),
-            self._has_file(".travis.yml"),
-            self._has_file("azure-pipelines.yml")
-        ])
-    
+        return any(
+            [
+                self._has_file(".github/workflows"),
+                self._has_file(".gitlab-ci.yml"),
+                self._has_file("Jenkinsfile"),
+                self._has_file(".travis.yml"),
+                self._has_file("azure-pipelines.yml"),
+            ]
+        )
+
     def _has_file(self, filename: str) -> bool:
         """Check if a file or directory exists"""
         return (self.repo_path / filename).exists()
-    
+
     def get_summary(self) -> Dict[str, Any]:
         """Get a summary of the analysis"""
         if not self.project_info:
             self.analyze()
-        
+
         return {
             "project_type": self.project_info.project_type,
             "language": self.project_info.language,
@@ -302,5 +321,5 @@ class RepositoryAnalyzer:
             "database": self.project_info.database,
             "has_docker": self.project_info.has_docker,
             "has_kubernetes": self.project_info.has_kubernetes,
-            "has_ci_cd": self.project_info.has_ci_cd
+            "has_ci_cd": self.project_info.has_ci_cd,
         }
