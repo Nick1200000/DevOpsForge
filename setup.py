@@ -7,8 +7,18 @@ from setuptools import setup, find_packages
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-with open("requirements.txt", "r", encoding="utf-8") as fh:
-    requirements = [line.strip() for line in fh if line.strip() and not line.startswith("#")]
+import os
+from pathlib import Path
+
+# Get the directory containing setup.py
+setup_dir = Path(__file__).parent
+requirements_file = setup_dir / "requirements.txt"
+
+if requirements_file.exists():
+    with open(requirements_file, "r", encoding="utf-8") as fh:
+        requirements = [line.strip() for line in fh if line.strip() and not line.startswith("#")]
+else:
+    requirements = []
 
 setup(
     name="devopsforge",
