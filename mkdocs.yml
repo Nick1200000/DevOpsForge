@@ -1,0 +1,102 @@
+site_name: DevOpsForge
+site_description: Professional DevOps automation tool that automatically generates CI/CD pipelines, Dockerfiles, and Kubernetes configurations
+site_author: DevOpsForge Team
+site_url: https://nick1200000.github.io/DevOpsForge/
+
+repo_name: Nick1200000/DevOpsForge
+repo_url: https://github.com/Nick1200000/DevOpsForge
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Nick1200000/DevOpsForge
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/devopsforge/
+
+plugins:
+  - search
+  - awesome-pages
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - User Guide: user-guide.md
+  - Examples: examples.md
+  - API Reference: api-reference.md
+  - Contributing: contributing.md
+  - Troubleshooting: troubleshooting.md
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - meta
+  - pymdownx.arithmatex:
+      target: mathjax
+      enable_dollar_delimiter: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:materialx.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      check_builtins: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+      slug_ separator: '-'
+      tabs_style: is-boxed
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - toc:
+      anchorlink: true
+      permalink: true
+      title: On this page
