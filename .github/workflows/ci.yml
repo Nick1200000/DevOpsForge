@@ -38,14 +38,14 @@ jobs:
     - name: Run linting
       run: |
         pip install flake8 black isort
-        flake8 devopsforge/
-        black --check devopsforge/
-        isort --check-only devopsforge/
+        flake8 devopsforge/ tests/
+        black --check devopsforge/ tests/
+        isort --check-only devopsforge/ tests/
     
     - name: Run tests
       run: |
-        pip install pytest pytest-cov
-        python -m pytest --cov=devopsforge --cov-report=xml
+        pip install pytest pytest-cov pytest-mock
+        python -m pytest tests/ --cov=devopsforge --cov-report=xml --cov-report=term-missing -v
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
@@ -116,7 +116,7 @@ jobs:
   publish:
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'devopsforge/devopsforge'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'Nick1200000/DevOpsForge'
     
     steps:
     - uses: actions/checkout@v4
