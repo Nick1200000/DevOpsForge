@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
   push:
@@ -6,19 +6,22 @@ on:
   pull_request:
     branches: [ main ]
 
-# Force workflow refresh
+# Force workflow refresh with new name and version
 env:
-  WORKFLOW_VERSION: "2.0.0"
+  WORKFLOW_VERSION: "3.0.0"
+  PIPELINE_NAME: "DevOpsForge-CI"
 
 jobs:
   test:
+    name: Test (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: [3.8, 3.9, 3.10, 3.11]
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
     
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
@@ -27,9 +30,12 @@ jobs:
     
     - name: Verify Python version
       run: |
+        echo "=== Python Version Information ==="
         echo "Python version: $(python --version)"
         echo "Python location: $(which python)"
         echo "Python executable: $(python -c 'import sys; print(sys.executable)')"
+        echo "Python path: $(python -c 'import sys; print(sys.path)')"
+        echo "================================"
     
     - name: Cache pip dependencies
       uses: actions/cache@v3
@@ -66,12 +72,14 @@ jobs:
         fail_ci_if_error: false
 
   security:
+    name: Security Scan
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
     
-    - name: Set up Python
+    - name: Set up Python 3.11
       uses: actions/setup-python@v4
       with:
         python-version: 3.11
@@ -84,7 +92,9 @@ jobs:
     
     - name: Run security checks
       run: |
+        echo "Running Safety check..."
         safety check
+        echo "Running Bandit security scan..."
         bandit -r devopsforge/ -f json -o bandit-report.json || true
     
     - name: Upload security report
@@ -94,14 +104,16 @@ jobs:
         path: bandit-report.json
 
   build:
+    name: Build Package
     needs: test
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
     
-    - name: Set up Python
+    - name: Set up Python 3.11
       uses: actions/setup-python@v4
       with:
         python-version: 3.11
@@ -124,12 +136,14 @@ jobs:
         path: dist/
 
   publish:
+    name: Publish to PyPI
     needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'Nick1200000/DevOpsForge'
     
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
     
     - name: Download build artifacts
       uses: actions/download-artifact@v3
@@ -137,7 +151,7 @@ jobs:
         name: dist
         path: dist/
     
-    - name: Set up Python
+    - name: Set up Python 3.11
       uses: actions/setup-python@v4
       with:
         python-version: 3.11
