@@ -1,5 +1,6 @@
 name: Deploy Documentation
 
+# Trigger workflow to deploy documentation now that GitHub Pages is enabled
 on:
   push:
     branches: [ main, develop ]
