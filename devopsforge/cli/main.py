@@ -2,18 +2,18 @@
 Main CLI interface for DevOpsGenie
 """
 
-import click
 import json
 from pathlib import Path
+
+import click
 from rich.console import Console
-from rich.table import Table
 from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
+from rich.table import Table
 
 from ..core.analyzer import RepositoryAnalyzer
-from ..templates.dockerfile_generator import DockerfileGenerator
 from ..templates.cicd_generator import CICDGenerator
-
+from ..templates.dockerfile_generator import DockerfileGenerator
 
 console = Console()
 

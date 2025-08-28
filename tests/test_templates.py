@@ -3,8 +3,9 @@ Tests for template generators
 """
 
 import pytest
-from devopsforge.templates.dockerfile_generator import DockerfileGenerator
+
 from devopsforge.templates.cicd_generator import CICDGenerator
+from devopsforge.templates.dockerfile_generator import DockerfileGenerator
 
 
 class TestDockerfileGenerator:

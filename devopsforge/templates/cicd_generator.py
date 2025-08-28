@@ -2,9 +2,10 @@
 CI/CD pipeline generator for DevOpsGenie
 """
 
-from jinja2 import Template
-from typing import Dict, Any
 from pathlib import Path
+from typing import Any, Dict
+
+from jinja2 import Template
 
 
 class CICDGenerator:

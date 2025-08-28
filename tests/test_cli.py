@@ -3,6 +3,7 @@ Tests for the CLI interface
 """
 
 from click.testing import CliRunner
+
 from devopsforge.cli.main import cli
 
 

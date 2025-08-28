@@ -3,7 +3,8 @@ Tests for the RepositoryAnalyzer class
 """
 
 from pathlib import Path
-from devopsforge.core.analyzer import RepositoryAnalyzer, ProjectInfo
+
+from devopsforge.core.analyzer import ProjectInfo, RepositoryAnalyzer
 
 
 class TestRepositoryAnalyzer:
