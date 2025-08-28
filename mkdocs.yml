@@ -31,7 +31,6 @@ theme:
     - search.suggest
     - search.highlight
     - content.code.copy
-    - content.code.annotate
 
   icon:
     repo: fontawesome/brands/github
@@ -63,9 +62,6 @@ markdown_extensions:
   - codehilite
   - footnotes
   - meta
-  - pymdownx.arithmatex:
-      target: mathjax
-      enable_dollar_delimiter: true
   - pymdownx.betterem:
       smart_enable: all
   - pymdownx.caret
@@ -91,7 +87,7 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
       combine_header_slug: true
-      slug_ separator: '-'
+      slug_separator: '-'
       tabs_style: is-boxed
   - pymdownx.tasklist:
       custom_checkbox: true
